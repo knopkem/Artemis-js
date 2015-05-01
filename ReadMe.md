@@ -4,6 +4,8 @@ Typescript port of the popular java based entity-component-framework artemis
 
 # More infos
 
+http://entity-systems.wikidot.com/
+
 http://en.wikipedia.org/wiki/Entity_component_system
 
 http://piemaster.net/2011/07/entity-component-primer
