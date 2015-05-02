@@ -102,7 +102,7 @@ class Entity {
 	 * @return this entity for chaining.
 	 */
 	public removeComponent(component : Component) : Entity {
-		this.removeComponentByType(component);
+		this.removeComponentByComponentType(ComponentTypeManager.getTypeFor(component));
 		return this;
 	}
 
@@ -124,10 +124,10 @@ class Entity {
 	 * 
 	 * @return this entity for chaining.
 	 */
-	public removeComponentByType(type: any) : Entity /*Class<? extends Component>*/ {
-		this.removeComponent(ComponentTypeManager.getTypeFor(type));
-		return this;
-	}
+	//public removeComponentByType(type: any) : Entity /*Class<? extends Component>*/ {
+	//	this.removeComponent(ComponentTypeManager.getTypeFor(type));
+	//	return this;
+	//}
 
 	/**
 	 * Checks if the entity has been added to the world and has not been deleted from it.
@@ -176,9 +176,9 @@ class Entity {
 	 *            the expected return component type.
 	 * @return component that matches, or null if none is found.
 	 */
-	public getComponentByGeneric(type : any) : any /*<T extends Component> T */ {
-		return this.getComponent(ComponentType.getTypeFor(type));
-	}
+	//public getComponentByComponent(type : any) : any /*<T extends Component> T */ {
+	//	return this.getComponent(ComponentType.getTypeFor(type));
+	//}
 
 	/**
 	 * Returns a bag of all components this entity has.

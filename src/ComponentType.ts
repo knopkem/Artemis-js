@@ -5,6 +5,9 @@ class ComponentType {
 
 	private _index : number;
 
+	constructor(type: Component) {
+		this._index = ComponentType.INDEX++;
+	}
 	public getIndex() : number {
 		return this._index;
 	}

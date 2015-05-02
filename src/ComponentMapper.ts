@@ -8,15 +8,15 @@
  * High performance component retrieval from entities. Use this wherever you
  * need to retrieve components from entities often and fast.
  */
-class ComponentMapper<T> {
+class ComponentMapper {
 	private _type: ComponentType;
-	private _classType: any;
+	//private _classType: any;
 	private _components: Bag<Component>;
 
-	constructor(type: T, world: World) {
-		this._type = ComponentTypeManager.getTypeFor(type);
+	constructor(type: Component, world: World) {
+		this._type = ComponentTypeManager.getTypeFor(<Component>type);
 		this._components = world.getComponentManager().getComponentsByType(this._type);
-		this._classType = type;
+		//this._classType = type;
 	}
 
 	/**
@@ -61,7 +61,7 @@ class ComponentMapper<T> {
 	 * @param world the world that this component mapper should use.
 	 * @return a new mapper.
 	 */
-	public getFor(type: T, world: World): ComponentMapper<T> {
-		return new ComponentMapper<T>(type, world);
+	public static getFor(type: Component, world: World): ComponentMapper {
+		return new ComponentMapper(type, world);
 	}	
 }

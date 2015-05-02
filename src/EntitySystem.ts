@@ -1,4 +1,5 @@
 /// <reference path='Entity.ts'/>
+/// <reference path='AClass.ts'/>
 /// <reference path='EntityObserver.ts'/>
 /// <reference path='Aspect.ts'/>
 /// <reference path='utils/BitSet.ts'/>
@@ -11,14 +12,13 @@
  */
 class SystemIndexManager {
 	private static INDEX : number = 0;
-	//private static HashMap<Class<? extends EntitySystem>, Integer> indices = new HashMap<Class<? extends EntitySystem>, Integer>();
-	private _indices : Hashtable;
+	private static _indices = new Hashtable();
 	
-	public static getIndexFor(es : any) /*(Class<? extends EntitySystem>*/: number {
-		var index : number = this_indices.get(es);
+	public static getIndexFor(es : EntitySystem) : number {
+		var index : number = <number>this._indices.get(es.getClassName());
 		if(index == null) {
 			index = this.INDEX++;
-			this._indices.put(es, index);
+			this._indices.put(es.getClassName(), index);
 		}
 		return index;
 	}
@@ -29,7 +29,7 @@ class SystemIndexManager {
  * entity system handling by extending this. It is recommended that you use the other provided
  * entity system implementations.
  */
-class EntitySystem implements EntityObserver {
+class EntitySystem extends AClass implements EntityObserver {
 	private _systemIndex : number;
 
 	protected _world: World;
@@ -51,6 +51,7 @@ class EntitySystem implements EntityObserver {
 	 * @param aspect to match against entities
 	 */
 	constructor(aspect: Aspect) {
+		super();
 		this._actives = new Bag<Entity>();
 		this._aspect = aspect;
 		this._allSet = aspect.getAllSet();
@@ -59,7 +60,7 @@ class EntitySystem implements EntityObserver {
 		this._systemIndex = SystemIndexManager.getIndexFor(this);
 		this._dummy = this._allSet.isEmpty() && this._oneSet.isEmpty(); // This system can't possibly be interested in any entity, so it must be "dummy"
 	}
-	
+		
 	
 	/**
 	 * libgdx integration for disposable classes.
@@ -109,21 +110,21 @@ class EntitySystem implements EntityObserver {
 	 * Override to implement code that gets executed when systems are initialized.
 	 */
 	public initialize() {		
-	};
+	}
 
 	/**
 	 * Called if the system has received a entity it is interested in, e.g. created or a component was added to it.
 	 * @param e the entity that was added to this system.
 	 */
 	protected inserted(e: Entity) {		
-	};
+	}
 
 	/**
 	 * Called if a entity was removed from this system, e.g. deleted or had one of it's components removed.
 	 * @param e the entity that was removed from this system.
 	 */
 	protected removed(e: Entity) {		
-	};
+	}
 
 	/**
 	 * Will check if the entity is of interest to this system.
@@ -204,15 +205,15 @@ class EntitySystem implements EntityObserver {
 	}
 	
 
-	protected setWorld(world: World) {
+	public setWorld(world: World) {
 		this._world = world;
 	}
 	
-	protected isPassive() : boolean {
+	public isPassive() : boolean {
 		return this._passive;
 	}
 
-	protected setPassive(passive: boolean) {
+	public setPassive(passive: boolean) {
 		this._passive = passive;
 	}
 	

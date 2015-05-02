@@ -7,6 +7,9 @@
 /// <reference path='ComponentManager.ts'/>
 /// <reference path='ComponentMapper.ts'/>
 /// <reference path='EntitySystem.ts'/>
+/// <reference path="depends/hashtable.d.ts" />
+
+// todo: implement ComponentMapperInitHelper
 
 /*
  * Only used internally to maintain clean code.
@@ -64,7 +67,7 @@ class ComponentMapperInitHelper {
 			}
 			*/
 		} catch (e) {
-			throw ("Error while setting component mappers", e);
+			throw new Error("Error while setting component mappers");
 		}
 	}
 
@@ -90,10 +93,10 @@ class World {
 	private _enable : Bag<Entity>;
 	private _disable : Bag<Entity>;
 
-	private _managers : { [key:any]:Manager; } //private Map<Class<? extends Manager>, Manager> managers;
+	private _managers = new Hashtable(); //{ [key:any]:Manager; } //private Map<Class<? extends Manager>, Manager> managers;
 	private _managersBag : Bag<Manager>;
 	
-	private _systems : { [key:any]:EntitySystem; } // private Map<Class<?>, EntitySystem> systems;
+	private _systems = new Hashtable(); //{ [key:any]:EntitySystem; } // private Map<Class<?>, EntitySystem> systems;
 	private _systemsBag : Bag<EntitySystem>;
 	
 	private _mAddedPerformer : AddPerformer;
@@ -312,7 +315,7 @@ class World {
 	 * @param system the system to add.
 	 * @return the added system.
 	 */
-	public setSystem(system : any)  /*<T extends EntitySystem> T*/ {
+	public setSystem(system : EntitySystem)  /*<T extends EntitySystem> T*/ {
 		return this.setSystem2(system, false);
 	}
 
@@ -323,11 +326,11 @@ class World {
 	 * @param passive wether or not this system will be processed by World.process()
 	 * @return the added system.
 	 */
-	public setSystem2(system : any, passive : boolean) {
+	public setSystem2(system : EntitySystem, passive : boolean) {
 		system.setWorld(this);
 		system.setPassive(passive);
 		
-		this._systems.put(system.getClass(), system);
+		this._systems.put(system.getClassName(), system);
 		this._systemsBag.add(system);
 		
 		return system;
@@ -338,13 +341,13 @@ class World {
 	 * @param system to be deleted from world.
 	 */
 	public deleteSystem(system: EntitySystem) {
-		this._systems.remove(system.getClass());
-		this._systemsBag.remove(system);
+		this._systems.remove(system.getClassName());
+		this._systemsBag.removeType(system);
 	}
 	
 	private notifySystems(performer : Performer, e: Entity) {
 		for(var i : number = 0, s = this._systemsBag.size(); s > i; i++) {
-			performer.perform(systemsBag.get(i), e);
+			performer.perform(this._systemsBag.get(i), e);
 		}
 	}
 
@@ -409,7 +412,7 @@ class World {
 	 * @param type of component to get mapper for.
 	 * @return mapper for specified component type.
 	 */
-	public getMapper(type : any) : ComponentMapper<any>   /*<T extends Component>*/ {
+	public getMapper(type : Component) : ComponentMapper   /*<T extends Component>*/ {
 		return ComponentMapper.getFor(type, this);
 	}
 

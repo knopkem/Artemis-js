@@ -1,4 +1,6 @@
 
+// Todo: implement intersect
+
 class BitSet {
 	
 	constructor() {
@@ -87,15 +89,21 @@ class BitSet {
 	
 	    var next,
 	        commons = Math.min(this.words(), set.words()),
-	        words = this._words;
+	        words = this._words,
+			i;
 	
 	    for (next = 0; next < commons; next += 1) {
 	        words[next] = (words[next] || 0) & (set._words[next] || 0);
 	    }
 	    if(commons > set.words()){
+			/* // uses underscore, not available here
 	        _.each(_.range(commons, set.words()), function(elem){
 	            words.pop();//using pop instead of assign zero to reduce the length of the array, and fasten the subsequent #and operations.
 	        });
+			*/
+			for (i = commons; i < set.words(); i += 1) {
+				words.pop();
+			}
 	    }
 	    return this;
 	}

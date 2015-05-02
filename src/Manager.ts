@@ -1,8 +1,9 @@
 /// <reference path='Entity.ts'/>
 /// <reference path='EntityObserver.ts'/>
 /// <reference path='World.ts'/>
+/// <reference path='AClass.ts'/>
 
-class Manager implements EntityObserver {
+class Manager extends AClass implements EntityObserver {
 	protected _world : World;
 	
 	public initialize() : void {

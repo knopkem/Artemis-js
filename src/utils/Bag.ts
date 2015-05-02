@@ -1,5 +1,7 @@
 ///<reference path='ImmutableBag.ts'/>
 
+// todo: implement grow() method correctly
+
 /**
  * Collection type a bit like ArrayList but does not preserve the order of its
  * entities, speedwise it is very good, especially suited for games.
