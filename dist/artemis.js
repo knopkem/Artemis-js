@@ -927,4 +927,22 @@ var ComponentManager = (function (_super) {
     };
     return ComponentManager;
 })(Manager);
+var EntityProcessingSystem = (function (_super) {
+    __extends(EntityProcessingSystem, _super);
+    function EntityProcessingSystem(aspect) {
+        _super.call(this, aspect);
+    }
+    EntityProcessingSystem.prototype.process = function (e) {
+        throw new Error('abstract function called');
+    };
+    EntityProcessingSystem.prototype.processEntities = function (entities) {
+        for (var i = 0, s = entities.size(); s > i; i++) {
+            this.process(entities.get(i));
+        }
+    };
+    EntityProcessingSystem.prototype.checkProcessing = function () {
+        return true;
+    };
+    return EntityProcessingSystem;
+})(EntitySystem);
 //# sourceMappingURL=artemis.js.map

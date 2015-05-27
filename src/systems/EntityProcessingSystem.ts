@@ -20,7 +20,7 @@ class EntityProcessingSystem extends EntitySystem {
 	 */
 	public process(e? : Entity) {
 		throw new Error('abstract function called');
-	};
+	}
 
 	protected processEntities(entities: ImmutableBag<Entity>) {
 		for (var i = 0, s = entities.size(); s > i; i++) {
