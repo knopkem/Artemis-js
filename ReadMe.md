@@ -8,6 +8,8 @@ http://entity-systems.wikidot.com/
 
 http://en.wikipedia.org/wiki/Entity_component_system
 
+http://cowboyprogramming.com/2007/01/05/evolve-your-heirachy/
+
 http://piemaster.net/2011/07/entity-component-primer
 
 http://piemaster.net/2011/07/entity-component-artemis
