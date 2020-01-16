@@ -1,5 +1,7 @@
 # Artemis-js 
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/knopkem/Artemis-js.svg)](https://greenkeeper.io/)
+
 Typescript port of the popular java based entity-component-framework artemis
 
 # More infos
