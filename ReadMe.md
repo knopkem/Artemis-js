@@ -1,6 +1,6 @@
 # Artemis-js 
 
-Typescript port of the popular java based entity-component-framework artemis
+Typescript port of the popular java based entity-component-framework artemis https://github.com/tescott/artemis.git
 
 # More infos
 
