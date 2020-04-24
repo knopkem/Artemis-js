@@ -8,6 +8,7 @@ var AClass = (function () {
     };
     return AClass;
 })();
+// Todo: implement intersect
 var BitSet = (function () {
     function BitSet() {
         this._words = [];
@@ -165,7 +166,8 @@ var ComponentType = (function () {
     ComponentType.INDEX = 0;
     return ComponentType;
 })();
-var __extends = this.__extends || function (d, b) {
+/// <reference path="AClass" />
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
@@ -178,6 +180,9 @@ var Component = (function (_super) {
     }
     return Component;
 })(AClass);
+/// <reference path="ComponentType.ts" />
+/// <reference path="depends/hashtable.d.ts" />
+/// <reference path="Component.ts" />
 var ComponentTypeManager = (function () {
     function ComponentTypeManager() {
     }
@@ -194,6 +199,9 @@ var ComponentTypeManager = (function () {
     ComponentTypeManager.TYPE_MAP = new Hashtable();
     return ComponentTypeManager;
 })();
+/// <reference path="utils/BitSet.ts" />
+/// <reference path="ComponentType.ts" />
+/// <reference path="ComponentTypeManager.ts" />
 var Aspect = (function () {
     function Aspect() {
         this._allSet = new BitSet();
@@ -248,6 +256,7 @@ var Aspect = (function () {
     };
     return Aspect;
 })();
+///<reference path='ImmutableBag.ts'/>
 var Bag = (function () {
     function Bag(capacity) {
         if (capacity === void 0) { capacity = 64; }
@@ -356,6 +365,10 @@ var Bag = (function () {
     };
     return Bag;
 })();
+/// <reference path='Entity.ts'/>
+/// <reference path='EntityObserver.ts'/>
+/// <reference path='World.ts'/>
+/// <reference path='AClass.ts'/>
 var Manager = (function (_super) {
     __extends(Manager, _super);
     function Manager() {
@@ -382,6 +395,7 @@ var Manager = (function (_super) {
     };
     return Manager;
 })(AClass);
+/// <reference path="Manager.ts" />
 var IdentifierPool = (function () {
     function IdentifierPool() {
         this._ids = new Bag();
@@ -453,6 +467,10 @@ var EntityManager = (function (_super) {
     };
     return EntityManager;
 })(Manager);
+/// <reference path="ComponentType.ts" />
+/// <reference path="ComponentTypeManager.ts" />
+/// <reference path="utils/Bag.ts" />
+/// <reference path="World.ts" />
 var ComponentMapper = (function () {
     function ComponentMapper(type, world) {
         this._type = ComponentTypeManager.getTypeFor(type);
@@ -475,6 +493,13 @@ var ComponentMapper = (function () {
     };
     return ComponentMapper;
 })();
+/// <reference path='Entity.ts'/>
+/// <reference path='AClass.ts'/>
+/// <reference path='EntityObserver.ts'/>
+/// <reference path='Aspect.ts'/>
+/// <reference path='utils/BitSet.ts'/>
+/// <reference path='utils/Bag.ts'/>
+/// <reference path="depends/hashtable.d.ts" />
 var SystemIndexManager = (function () {
     function SystemIndexManager() {
     }
@@ -597,6 +622,15 @@ var EntitySystem = (function (_super) {
     };
     return EntitySystem;
 })(AClass);
+/// <reference path='utils/Bag.ts'/>
+/// <reference path='utils/BitSet.ts'/>
+/// <reference path='Manager.ts'/>
+/// <reference path='Entity.ts'/>
+/// <reference path='EntityManager.ts'/>
+/// <reference path='ComponentManager.ts'/>
+/// <reference path='ComponentMapper.ts'/>
+/// <reference path='EntitySystem.ts'/>
+/// <reference path="depends/hashtable.d.ts" />
 var AddPerformer = (function () {
     function AddPerformer() {
     }
@@ -785,6 +819,12 @@ var World = (function () {
     };
     return World;
 })();
+/// <reference path='utils/Bag.ts'/>
+/// <reference path='utils/BitSet.ts'/>
+/// <reference path='World.ts'/>
+/// <reference path='EntityManager.ts'/>
+/// <reference path='ComponentManager.ts'/>
+/// <reference path='ComponentTypeManager.ts'/>
 var Entity = (function () {
     function Entity(world, id) {
         this._world = world;
@@ -859,6 +899,12 @@ var Entity = (function () {
     };
     return Entity;
 })();
+/// <reference path='utils/Bag.ts'/>
+/// <reference path='utils/BitSet.ts'/>
+/// <reference path='Component.ts'/>
+/// <reference path='Entity.ts'/>
+/// <reference path='Manager.ts'/>
+/// <reference path='ComponentType.ts'/>
 var ComponentManager = (function (_super) {
     __extends(ComponentManager, _super);
     function ComponentManager() {
@@ -927,6 +973,9 @@ var ComponentManager = (function (_super) {
     };
     return ComponentManager;
 })(Manager);
+/// <reference path="../EntitySystem.ts" />
+/// <reference path="../Entity.ts" />
+/// <reference path="../Aspect.ts" />
 var EntityProcessingSystem = (function (_super) {
     __extends(EntityProcessingSystem, _super);
     function EntityProcessingSystem(aspect) {

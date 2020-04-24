@@ -1,4 +1,4 @@
-
+/// <reference path="Component.ts" />
 
 class ComponentType {
 	private static INDEX : number = 0;

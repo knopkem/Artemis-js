@@ -1,3 +1,4 @@
+/// <reference path="Entity.ts" />
 
 interface EntityObserver {
 	
